@@ -7,6 +7,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.servers.Server;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.servlet.ServletConfig;
@@ -31,6 +32,8 @@ public class BootstrapSwagger extends HttpServlet {
 							 .url("http://www.apache.org/licenses/LICENSE-2.0.html"));
 
 		oas.info(info);
+		oas.addServersItem(getServer());
+
 		SwaggerConfiguration oasConfig = new SwaggerConfiguration()
 				  .openAPI(oas)
 				  .resourcePackages(Stream.of("com.anik").collect(Collectors.toSet()));
@@ -52,5 +55,12 @@ public class BootstrapSwagger extends HttpServlet {
 		} catch (OpenApiConfigurationException e) {
 			throw new ServletException(e.getMessage(), e);
 		}
+	}
+
+	private Server getServer() {
+		final Server server = new Server();
+
+		server.setUrl("http://localhost:8084/templ/api/");
+		return server;
 	}
 }

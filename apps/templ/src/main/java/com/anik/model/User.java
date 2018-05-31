@@ -1,11 +1,13 @@
 package com.anik.model;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 public class User {
 	private String firstName;
 	private String lastName;
 	private LocalDate dob;
+	private Map<String, Address> addresses;
 
 	public String getFirstName() {
 		return firstName;
@@ -29,5 +31,13 @@ public class User {
 
 	public void setDob(LocalDate dob) {
 		this.dob = dob;
+	}
+
+	public Map<String, Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(Map<String, Address> addresses) {
+		this.addresses = addresses;
 	}
 }
