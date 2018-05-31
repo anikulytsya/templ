@@ -8,9 +8,14 @@ import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.servers.Server;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
@@ -32,7 +37,7 @@ public class BootstrapSwagger extends HttpServlet {
 							 .url("http://www.apache.org/licenses/LICENSE-2.0.html"));
 
 		oas.info(info);
-		oas.addServersItem(getServer());
+		oas.addServersItem(getServer(config));
 
 		SwaggerConfiguration oasConfig = new SwaggerConfiguration()
 				  .openAPI(oas)
@@ -57,10 +62,16 @@ public class BootstrapSwagger extends HttpServlet {
 		}
 	}
 
-	private Server getServer() {
+	private Server getServer(final ServletConfig config) {
 		final Server server = new Server();
 
-		server.setUrl("http://localhost:8084/templ/api/");
+		
+		final String context = config.getServletContext().getContextPath();
+		if (context == null || context.isEmpty())
+			server.setUrl("http://localhost:8084/api/");
+		else
+			server.setUrl("http://localhost:8084/" + context +  "/api/");
+
 		return server;
 	}
 }
