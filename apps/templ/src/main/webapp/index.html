@@ -34,14 +34,13 @@
   <body>
     <div id="swagger-ui"></div>
 
-    <script src="./swagger-ui-bundle.js"> </script>
-    <script src="./swagger-ui-standalone-preset.js"> </script>
+    <script src="./swagger/swagger-ui-bundle.js"> </script>
+    <script src="./swagger/swagger-ui-standalone-preset.js"> </script>
     <script>
     window.onload = function() {
 
 		const openApiPath = window.location.href.replace(/(.+\/)(index\.html)?/,"$1") + "api/openapi.json";
       // Build a system
-      //  url: "http://localhost:8084/templ/api/openapi.json",
       const ui = SwaggerUIBundle({
         url: openApiPath, 
         dom_id: '#swagger-ui',

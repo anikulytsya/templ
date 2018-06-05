@@ -51,7 +51,7 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${basedir}/src/main/webapp</outputDirectory>
+							<outputDirectory>${basedir}/src/main/webapp/swagger</outputDirectory>
 							<resources>
 								<resource>
 									<directory>${project.build.directory}/swagger-ui-master/dist</directory>
