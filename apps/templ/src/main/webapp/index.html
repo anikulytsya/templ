@@ -39,9 +39,11 @@
     <script>
     window.onload = function() {
 
+		const openApiPath = window.location.href.replace(/(.+\/)(index\.html)?/,"$1") + "api/openapi.json";
       // Build a system
+      //  url: "http://localhost:8084/templ/api/openapi.json",
       const ui = SwaggerUIBundle({
-        url: "api/openapi.json",
+        url: openApiPath, 
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [
