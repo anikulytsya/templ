@@ -1,9 +1,12 @@
 package com.anik.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.Map;
 
+@Schema(name="User", description="User model")
 public class User {
+	@Schema(description = "First name", required = true)
 	private String firstName;
 	private String lastName;
 	private LocalDate dob;
