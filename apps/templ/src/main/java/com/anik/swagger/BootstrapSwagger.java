@@ -67,7 +67,7 @@ public class BootstrapSwagger extends HttpServlet {
 		else if (context.startsWith("/"))
 			server.setUrl("http://localhost:8084" + context +  "/api/");
 		else
-			server.setUrl("http://localhost:8084/" + context +  "/api/");
+			server.setUrl("http://localhost:8084" + context +  "/api/");
 
 		return server;
 	}
