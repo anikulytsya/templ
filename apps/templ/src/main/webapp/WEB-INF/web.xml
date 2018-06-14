@@ -12,6 +12,10 @@ see implementation details http://jersey.java.net/nonav/documentation/latest/jax
 				com.anik
 			</param-value>
 		</init-param>
+		<init-param>
+     		<param-name>javax.ws.rs.Application</param-name>
+      	<param-value>com.anik.App</param-value>
+ 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
