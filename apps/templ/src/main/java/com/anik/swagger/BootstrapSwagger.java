@@ -3,11 +3,15 @@ package com.anik.swagger;
 import io.swagger.v3.jaxrs2.integration.JaxrsOpenApiContextBuilder;
 import io.swagger.v3.oas.integration.OpenApiConfigurationException;
 import io.swagger.v3.oas.integration.SwaggerConfiguration;
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.servlet.ServletConfig;
@@ -18,8 +22,10 @@ public class BootstrapSwagger extends HttpServlet {
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
-		OpenAPI oas = new OpenAPI();
-		Info info = new Info()
+		final OpenAPI oas = new OpenAPI();
+		final Components components = new Components();
+		final SecurityScheme apiKey = createApiKeySecurityScheme();
+		final Info info = new Info()
 				  .title("Swagger Sample App - independent config exposed by dedicated servlet")
 				  .description("This is a sample server Petstore server.  You can find out more about Swagger "
 							 + "at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, "
@@ -32,6 +38,13 @@ public class BootstrapSwagger extends HttpServlet {
 							 .url("http://www.apache.org/licenses/LICENSE-2.0.html"));
 
 		oas.info(info);
+		oas.schemaRequirement(apiKey.getName(), apiKey);
+		SecurityRequirement sr = new SecurityRequirement();
+		sr.addList(apiKey.getName());
+		oas.security(Arrays.asList(sr));
+		//oas.components(components
+		//	.addSecuritySchemes("apiKey", createApiKeySecurityScheme())
+		//);
 		oas.addServersItem(getServer(config));
 
 		SwaggerConfiguration oasConfig = new SwaggerConfiguration()
@@ -70,5 +83,14 @@ public class BootstrapSwagger extends HttpServlet {
 			server.setUrl("http://localhost:8084" + context +  "/api/");
 
 		return server;
+	}
+
+	private SecurityScheme createApiKeySecurityScheme() {
+		final SecurityScheme securityScheme = new SecurityScheme();
+
+		securityScheme.setName("X-Api-Key");
+		securityScheme.setType(SecurityScheme.Type.APIKEY);
+		securityScheme.setIn(SecurityScheme.In.HEADER);
+		return securityScheme;
 	}
 }

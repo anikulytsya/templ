@@ -31,11 +31,7 @@ import org.slf4j.LoggerFactory;
 	),
 	tags = {
 		@Tag(name = "Tag1", description = "Tag1 description"),
-		@Tag(name = "Tag2", description = "Tag2 description"),},
-	security = {
-		@SecurityRequirement(name = "req 1", scopes = {"a", "b"}),
-		@SecurityRequirement(name = "req 2", scopes = {"b", "c"})
-	}
+		@Tag(name = "Tag2", description = "Tag2 description")}
 )
 @Produces(MediaType.APPLICATION_JSON)
 public class MyResource {
