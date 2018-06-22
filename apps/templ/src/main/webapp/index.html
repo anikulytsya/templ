@@ -39,7 +39,7 @@
     <script>
     window.onload = function() {
 
-		const openApiPath = window.location.href.replace(/(.+\/)(index\.html)?/,"$1") + "api/openapi.json";
+		const openApiPath = window.location.href.replace(/^\s*(.+\/)(index\.html)?(#.*)?\s*$/,"$1") + "api/openapi.json";
       // Build a system
       const ui = SwaggerUIBundle({
         url: openApiPath, 
