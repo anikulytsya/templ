@@ -3,7 +3,6 @@ package com.anik.swagger;
 import io.swagger.v3.jaxrs2.integration.JaxrsOpenApiContextBuilder;
 import io.swagger.v3.oas.integration.OpenApiConfigurationException;
 import io.swagger.v3.oas.integration.SwaggerConfiguration;
-import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
@@ -23,8 +22,8 @@ public class BootstrapSwagger extends HttpServlet {
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		final OpenAPI oas = new OpenAPI();
-		final Components components = new Components();
 		final SecurityScheme apiKey = createApiKeySecurityScheme();
+		final SecurityScheme auth = createAuthSecurityScheme();
 		final Info info = new Info()
 				  .title("Swagger Sample App - independent config exposed by dedicated servlet")
 				  .description("This is a sample server Petstore server.  You can find out more about Swagger "
@@ -39,9 +38,16 @@ public class BootstrapSwagger extends HttpServlet {
 
 		oas.info(info);
 		oas.schemaRequirement(apiKey.getName(), apiKey);
-		SecurityRequirement sr = new SecurityRequirement();
-		sr.addList(apiKey.getName());
-		oas.security(Arrays.asList(sr));
+		oas.schemaRequirement(auth.getName(), auth);
+
+		SecurityRequirement sr1 = new SecurityRequirement();
+		sr1.addList(apiKey.getName());
+
+		SecurityRequirement sr2 = new SecurityRequirement();
+		sr2.addList(auth.getName());
+
+		oas.security(Arrays.asList(sr1, sr2));
+
 		//oas.components(components
 		//	.addSecuritySchemes("apiKey", createApiKeySecurityScheme())
 		//);
@@ -89,6 +95,15 @@ public class BootstrapSwagger extends HttpServlet {
 		final SecurityScheme securityScheme = new SecurityScheme();
 
 		securityScheme.setName("X-Api-Key");
+		securityScheme.setType(SecurityScheme.Type.APIKEY);
+		securityScheme.setIn(SecurityScheme.In.HEADER);
+		return securityScheme;
+	}
+
+	private SecurityScheme createAuthSecurityScheme() {
+		final SecurityScheme securityScheme = new SecurityScheme();
+
+		securityScheme.setName("Authorization");
 		securityScheme.setType(SecurityScheme.Type.APIKEY);
 		securityScheme.setIn(SecurityScheme.In.HEADER);
 		return securityScheme;
