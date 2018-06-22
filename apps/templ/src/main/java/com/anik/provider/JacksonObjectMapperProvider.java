@@ -7,7 +7,6 @@ import javax.ws.rs.ext.Provider;
 
 @Provider
 public class JacksonObjectMapperProvider implements ContextResolver<ObjectMapper> {
-
     final ObjectMapper defaultObjectMapper;
 
     public JacksonObjectMapperProvider() {

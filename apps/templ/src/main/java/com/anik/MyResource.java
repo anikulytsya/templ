@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
 		@SecurityRequirement(name = "req 2", scopes = {"b", "c"})
 	}
 )
+@Produces(MediaType.APPLICATION_JSON)
 public class MyResource {
 	private static final Logger LOG = LoggerFactory.getLogger(MyResource.class);
 	@Inject
@@ -45,7 +46,6 @@ public class MyResource {
 	private Service2 service2;
 
 	@GET
-	@Produces(MediaType.TEXT_PLAIN)
 	@Operation(summary = "Get it", description = "Get it as text")
 	public Response getIt() {
 		final String res = service.getData();
@@ -55,7 +55,6 @@ public class MyResource {
 	}
 
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
 	@Path("user")
 	@Operation(summary = "Get User summary",
 		description = "Get User description", tags = {"Tag1"})
@@ -69,7 +68,6 @@ public class MyResource {
 	}
 
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
 	@Path("user/{id}")
 	@Operation(summary = "Get User by id summary",
 		description = "Get User by id description", tags = {"Tag1"})
