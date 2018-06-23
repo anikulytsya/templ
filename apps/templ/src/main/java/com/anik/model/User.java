@@ -1,7 +1,10 @@
 package com.anik.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Map;
 
 @Schema(name="User", description="User model")
@@ -10,6 +13,9 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private LocalDate dob;
+	private LocalDateTime localDateTime;
+	private Instant instant;
+	private OffsetDateTime offsetDateTime;
 	private Map<String, Address> addresses;
 
 	public String getFirstName() {
@@ -43,4 +49,29 @@ public class User {
 	public void setAddresses(Map<String, Address> addresses) {
 		this.addresses = addresses;
 	}
+
+	public LocalDateTime getLocalDateTime() {
+		return localDateTime;
+	}
+
+	public void setLocalDateTime(LocalDateTime localDateTime) {
+		this.localDateTime = localDateTime;
+	}
+
+	public Instant getInstant() {
+		return instant;
+	}
+
+	public void setInstant(Instant instant) {
+		this.instant = instant;
+	}
+
+	public OffsetDateTime getOffsetDateTime() {
+		return offsetDateTime;
+	}
+
+	public void setOffsetDateTime(OffsetDateTime offsetDateTime) {
+		this.offsetDateTime = offsetDateTime;
+	}
+	
 }

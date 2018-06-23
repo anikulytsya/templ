@@ -7,9 +7,11 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -60,6 +62,9 @@ public class MyResource {
 		user.setFirstName("xxx");
 		user.setLastName("yyy");
 		user.setDob(LocalDate.now());
+		user.setInstant(Instant.now());
+		user.setLocalDateTime(LocalDateTime.now());
+		user.setOffsetDateTime(OffsetDateTime.now());
 		return user;
 	}
 
@@ -75,6 +80,9 @@ public class MyResource {
 		user.setFirstName("xxx" + id);
 		user.setLastName("yyy");
 		user.setDob(LocalDate.now());
+		user.setInstant(Instant.now());
+		user.setLocalDateTime(LocalDateTime.now());
+		user.setOffsetDateTime(OffsetDateTime.now());
 		return user;
 	}
 }
