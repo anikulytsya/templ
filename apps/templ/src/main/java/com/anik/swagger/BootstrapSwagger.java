@@ -57,14 +57,6 @@ public class BootstrapSwagger extends HttpServlet {
 				  .openAPI(oas)
 				  .resourcePackages(Stream.of("com.anik").collect(Collectors.toSet()));
 
-		// or
-/*
-    try {
-      new GenericOpenApiContext().openApiConfiguration(oasConfig).init();
-    } catch (OpenApiConfigurationException e) {
-      e.printStackTrace();
-    }
-		 */
 		try {
 			new JaxrsOpenApiContextBuilder()
 					  .servletConfig(config)
