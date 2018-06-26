@@ -12,6 +12,10 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -66,6 +70,42 @@ public class MyResource {
 		user.setLocalDateTime(LocalDateTime.now());
 		user.setOffsetDateTime(OffsetDateTime.now());
 		return user;
+	}
+
+	@GET
+	@Path("user/list")
+	@Operation(summary = "Get User list",
+		description = "Get User list", tags = {"Tag1"})
+	public List<User> getUserList() {
+		final List<User> res = new ArrayList<>();
+		final User user = new User();
+
+		user.setFirstName("xxx");
+		user.setLastName("yyy");
+		user.setDob(LocalDate.now());
+		user.setInstant(Instant.now());
+		user.setLocalDateTime(LocalDateTime.now());
+		user.setOffsetDateTime(OffsetDateTime.now());
+		res.add(user);
+		return res;
+	}
+
+	@GET
+	@Path("user/map")
+	@Operation(summary = "Get User map",
+		description = "Get User map", tags = {"Tag1"})
+	public Map<String, User> getUserMap() {
+		final Map<String, User> res = new HashMap<>();
+		final User user = new User();
+
+		user.setFirstName("xxx");
+		user.setLastName("yyy");
+		user.setDob(LocalDate.now());
+		user.setInstant(Instant.now());
+		user.setLocalDateTime(LocalDateTime.now());
+		user.setOffsetDateTime(OffsetDateTime.now());
+		res.put("first", user);
+		return res;
 	}
 
 	@GET
