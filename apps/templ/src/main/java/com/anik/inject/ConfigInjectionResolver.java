@@ -33,6 +33,14 @@ public class ConfigInjectionResolver implements InjectionResolver<Config> {
 
 				return toInteger(configuration.getProperty(prop));
 			}
+		} else if (Long.class == injectee.getRequiredType()) {
+			final Config annotation = injectee.getParent().getAnnotation(Config.class);
+
+			if (annotation != null) {
+				final String prop = annotation.value();
+
+				return toLong(configuration.getProperty(prop));
+			}
 		}
 
 		return null;
@@ -49,6 +57,27 @@ public class ConfigInjectionResolver implements InjectionResolver<Config> {
 
 				try {
 					return Integer.parseInt(val);
+				} catch (final NumberFormatException ex) {
+					LOG.warn("Invalid number in settings: {}", val);
+					return null;
+				}
+			}
+		} else {
+			return null;
+		}
+	}
+
+	private Long toLong(final Object obj) {
+		if (obj != null) {
+			if (obj instanceof Long)
+				return (Long) obj;
+			else if (obj instanceof Integer)
+				return ((Integer) obj).longValue();
+			else {
+				final String val = obj.toString();
+
+				try {
+					return Long.parseLong(val);
 				} catch (final NumberFormatException ex) {
 					LOG.warn("Invalid number in settings: {}", val);
 					return null;
