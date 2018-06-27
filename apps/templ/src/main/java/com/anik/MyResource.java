@@ -1,5 +1,6 @@
 package com.anik;
 
+import com.anik.annotations.Config;
 import com.anik.model.User;
 import com.anik.service.Service;
 import com.anik.service.Service2;
@@ -46,11 +47,13 @@ public class MyResource {
 	private Service service;
 	@Inject
 	private Service2 service2;
+	@Config("xxx")
+	private String xxx;
 
 	@GET
 	@Operation(summary = "Get it", description = "Get it as text")
 	public Response getIt() {
-		final String res = service.getData();
+		final String res = service.getData() + xxx;
 
 		LOG.info("test");
 		return Response.ok(res).build();

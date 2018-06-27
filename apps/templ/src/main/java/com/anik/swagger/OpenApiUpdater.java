@@ -4,7 +4,6 @@ import io.swagger.v3.jaxrs2.Reader;
 import io.swagger.v3.jaxrs2.ReaderListener;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.Schema;
 import javax.ws.rs.Path;
 import org.slf4j.Logger;
