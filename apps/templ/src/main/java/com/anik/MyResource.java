@@ -49,11 +49,13 @@ public class MyResource {
 	private Service2 service2;
 	@Config("xxx")
 	private String xxx;
+	@Config("yyy")
+	private Integer yyy;
 
 	@GET
 	@Operation(summary = "Get it", description = "Get it as text")
 	public Response getIt() {
-		final String res = service.getData() + xxx;
+		final String res = service.getData() + xxx + yyy;
 
 		LOG.info("test");
 		return Response.ok(res).build();

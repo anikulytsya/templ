@@ -22,6 +22,7 @@ public class App extends ResourceConfig {
 
 		properties.forEach((name, value) -> property((String) name, value));
 		property("xxx", "aaa");
+		property("yyy", 100);
 	}
 
 	private String confPath() {
