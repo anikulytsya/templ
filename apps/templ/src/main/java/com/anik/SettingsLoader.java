@@ -13,6 +13,8 @@ public class SettingsLoader {
 	public Properties load(final String path) {
 		final Properties properties = new Properties();
 
+		LOG.info("Loading settings from: {}", path);
+
 		try (FileInputStream is = new FileInputStream(path)) {
 			properties.load(is);
 		} catch (final FileNotFoundException ex) {

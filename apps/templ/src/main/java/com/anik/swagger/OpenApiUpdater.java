@@ -16,12 +16,10 @@ public class OpenApiUpdater implements ReaderListener {
 
 	@Override
 	public void beforeScan(final Reader reader, final OpenAPI oapi) {
-		LOG.warn("before scan");
 	}
 
 	@Override
 	public void afterScan(final Reader reader, final OpenAPI oapi) {
-		LOG.warn("after scan");
 		oapi.getPaths().values().stream()
 			.flatMap(p -> p.readOperations().stream())
 			.map(o -> o.getResponses())
