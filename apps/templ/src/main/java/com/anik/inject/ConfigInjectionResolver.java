@@ -1,6 +1,10 @@
 package com.anik.inject;
 
 import com.anik.annotations.Config;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Constructor;
+import java.util.stream.Stream;
 import javax.ws.rs.core.Configuration;
 import javax.ws.rs.core.Context;
 import org.glassfish.hk2.api.Injectee;
@@ -18,32 +22,52 @@ public class ConfigInjectionResolver implements InjectionResolver<Config> {
 	@Override
 	public Object resolve(final Injectee injectee, final ServiceHandle<?> handle) {
 		if (String.class == injectee.getRequiredType()) {
-			final Config annotation = injectee.getParent().getAnnotation(Config.class);
+			final Config config = getConfigAnnotation(injectee);
 
-			if (annotation != null) {
-				final String prop = annotation.value();
+			if (config != null) {
+				final String prop = config.value();
 
 				return (String) configuration.getProperty(prop);
 			}
 		} else if (Integer.class == injectee.getRequiredType()) {
-			final Config annotation = injectee.getParent().getAnnotation(Config.class);
+			final Config config = getConfigAnnotation(injectee);
 
-			if (annotation != null) {
-				final String prop = annotation.value();
+			if (config != null) {
+				final String prop = config.value();
 
 				return toInteger(configuration.getProperty(prop));
 			}
 		} else if (Long.class == injectee.getRequiredType()) {
-			final Config annotation = injectee.getParent().getAnnotation(Config.class);
+			final Config config = getConfigAnnotation(injectee);
 
-			if (annotation != null) {
-				final String prop = annotation.value();
+			if (config != null) {
+				final String prop = config.value();
 
 				return toLong(configuration.getProperty(prop));
 			}
 		}
 
 		return null;
+	}
+
+	private Config getConfigAnnotation(final Injectee injectee) {
+		final AnnotatedElement elem = injectee.getParent();
+
+		if (elem instanceof Constructor) {
+			final Constructor ctor = (Constructor) elem;
+			final Annotation[] annotations = ctor.getParameterAnnotations()[injectee.getPosition()];
+
+			if (annotations != null)
+				return Stream.of(annotations)
+					.filter(a -> a.annotationType().equals(Config.class))
+					.map(a -> (Config) a)
+					.findFirst()
+					.orElse(null);
+			else
+				return null;
+		} else {
+			return elem.getAnnotation(Config.class);
+		}
 	}
 
 	private Integer toInteger(final Object obj) {
@@ -95,6 +119,6 @@ public class ConfigInjectionResolver implements InjectionResolver<Config> {
 
 	@Override
 	public boolean isMethodParameterIndicator() {
-		return true;
+		return false;
 	}
 }

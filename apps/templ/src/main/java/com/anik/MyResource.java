@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
+import javax.jdo.PersistenceManager;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -47,15 +48,13 @@ public class MyResource {
 	private Service service;
 	@Inject
 	private Service2 service2;
-	@Config("xxx")
-	private String xxx;
-	@Config("yyy")
-	private Integer yyy;
+	@Inject
+	private PersistenceManager pm;
 
 	@GET
 	@Operation(summary = "Get it", description = "Get it as text")
 	public Response getIt() {
-		final String res = service.getData() + xxx + yyy;
+		final String res = service.getData();
 
 		LOG.info("test");
 		return Response.ok(res).build();

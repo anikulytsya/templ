@@ -12,7 +12,8 @@ public class SettingsLoader {
 
 	public Properties load(final String path) {
 		final DefaultSettings defaultSettings = new DefaultSettings();
-		final Properties properties = new Properties(defaultSettings.get());
+		final Properties defaults = defaultSettings.get();
+		final Properties properties = new Properties(defaults);
 
 		LOG.info("Loading settings from: {}", path);
 
