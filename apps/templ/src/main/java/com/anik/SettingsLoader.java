@@ -11,7 +11,8 @@ public class SettingsLoader {
 	private static final Logger LOG = LoggerFactory.getLogger(SettingsLoader.class);
 
 	public Properties load(final String path) {
-		final Properties properties = new Properties();
+		final DefaultSettings defaultSettings = new DefaultSettings();
+		final Properties properties = new Properties(defaultSettings.get());
 
 		LOG.info("Loading settings from: {}", path);
 
