@@ -7,6 +7,7 @@ import com.anik.service.Service;
 import com.anik.service.Service2;
 import javax.inject.Singleton;
 import javax.jdo.PersistenceManager;
+import javax.jdo.PersistenceManagerFactory;
 import org.glassfish.hk2.api.InjectionResolver;
 import org.glassfish.hk2.api.TypeLiteral;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -22,7 +23,7 @@ public class AppBinder extends AbstractBinder {
 			.to(new TypeLiteral<InjectionResolver<Config>>() {})
 			.in(Singleton.class);
 		bindFactory(PMFFactory.class)
-			.to(PMF.class)
+			.to(PersistenceManagerFactory.class)
 			.in(Singleton.class);
 		bindFactory(PMF.class)
 			.to(PersistenceManager.class)
