@@ -1,6 +1,5 @@
 package com.anik;
 
-import com.anik.annotations.Config;
 import com.anik.model.User;
 import com.anik.service.Service;
 import com.anik.service.Service2;
@@ -20,9 +19,11 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.jdo.PersistenceManager;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
@@ -128,5 +129,14 @@ public class MyResource {
 		user.setLocalDateTime(LocalDateTime.now());
 		user.setOffsetDateTime(OffsetDateTime.now());
 		return user;
+	}
+
+	@GET
+	@Path("exception")
+	@Operation(summary = "This api throws an exception",
+		description = "Get User by id description", tags = {"Tag1"})
+	public Object exception(
+			@QueryParam("val") final Integer val) {
+		throw new RuntimeException(val.toString());
 	}
 }
