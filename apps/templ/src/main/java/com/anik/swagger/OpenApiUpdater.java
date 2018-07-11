@@ -37,7 +37,8 @@ public class OpenApiUpdater implements ReaderListener {
 
 		res.type("object")
 			.addProperties("error", new Schema().type("string"))
-			.addProperties("data", schema);
+			.addProperties("data", schema)
+			.addProperties("code", new Schema().type("integer"));
 		return res;
 	}
 }

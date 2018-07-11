@@ -19,13 +19,14 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.jdo.PersistenceManager;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -137,6 +138,6 @@ public class MyResource {
 		description = "Get User by id description", tags = {"Tag1"})
 	public Object exception(
 			@QueryParam("val") final Integer val) {
-		throw new RuntimeException(val.toString());
+		throw new NotFoundException();
 	}
 }

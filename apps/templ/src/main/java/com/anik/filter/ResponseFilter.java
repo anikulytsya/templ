@@ -23,13 +23,18 @@ public class ResponseFilter implements ContainerResponseFilter {
 	public void filter(
 			  final ContainerRequestContext requestContext,
 			  final ContainerResponseContext responseContext) throws IOException {
-		if (shouldBeWrapped())
-			responseContext.setEntity(wrap(responseContext.getEntity()));
+		if (shouldBeWrapped(responseContext.getEntityClass())) {
+			final ServletResponse response = wrap(responseContext.getEntity());
+
+			response.setCode(responseContext.getStatus());
+			responseContext.setEntity(response);
+		}
 	}
 
-	private boolean shouldBeWrapped() {
+	private boolean shouldBeWrapped(final Class entityClass) {
 		//avoid wraping for open api response
-		return !resourceInfo.getResourceClass().equals(OpenApiResource.class);
+		return !resourceInfo.getResourceClass().equals(OpenApiResource.class)
+			&&	(entityClass == null || !entityClass.equals(ServletResponse.class));
 	}
 
 	private ServletResponse wrap(final Object data) {
